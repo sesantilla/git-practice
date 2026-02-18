@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, master, practice-branch ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install C++ compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++
+
+      - name: Build project
+        run: |
+          if [ -f main.cpp ]; then
+            g++ -o main main.cpp
+            echo "Build successful"
+          else
+            echo "No main.cpp found, skipping build"
+          fi
